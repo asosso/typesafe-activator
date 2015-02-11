@@ -9,11 +9,13 @@ ENV         JAVA_VERSION 8
 ENV         DEBIAN_FRONTEND noninteractive
 
 # INSTALL OS DEPENDENCIES, JAVA AND TYPESAFE ACTIVATOR
-RUN         add-apt-repository -y ppa:webupd8team/java && \
+RUN			apt-get update && \
+	        apt-get install -y software-properties-common unzip && \
+			add-apt-repository -y ppa:webupd8team/java && \
 	        echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
             echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections && \
 			apt-get update && \
-			apt-get install -y software-properties-common unzip oracle-java$JAVA_VERSION-installer && \
+			apt-get install -y oracle-java$JAVA_VERSION-installer && \
             cd /tmp && \
             wget http://downloads.typesafe.com/typesafe-activator/$ACTIVATOR_VERSION/typesafe-activator-$ACTIVATOR_VERSION.zip && \
             unzip typesafe-activator-$ACTIVATOR_VERSION.zip -d /usr/local && \
